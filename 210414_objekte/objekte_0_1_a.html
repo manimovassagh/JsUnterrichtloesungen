@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+
+        const haus = {
+            adresse: {
+                strasse: 'Mustergasse',
+                hnr: '37b',
+                plz: '01234',
+                ort: 'Musterhausen',
+                get anschrift() {
+                    return `${this.strasse} ${this.hnr}\n${this.plz} ${this.ort}`
+                }
+            },
+            eigentuemer: {
+                vname: 'Thomas',
+                nname: 'Möller',
+                adresse: {
+                    strasse: 'Schlossallee',
+                    hnr: '1',
+                    plz: '01236',
+                    ort: 'Beispielbüttel',
+                    get anschrift() {
+                        return `${this.strasse} ${this.hnr}\n${this.plz} ${this.ort}`
+                    }
+                },
+                kontakt: {
+                    tel: '+49-176-852369',
+                    email: 'gibmir@deinekohle.de'
+                }
+            }
+        }
+
+        console.log(haus.adresse.anschrift);
+        console.log(haus.eigentuemer.adresse.anschrift);
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

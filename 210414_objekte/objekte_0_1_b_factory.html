@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+        // Factory oder factory function
+        // Eine Funktion, die ein Objekt als Rückgabewert leifert
+        const Adresse = (strasse, hnr, plz, ort) => {
+            return {
+                // wenn als Attribut nur ein Wert steht wird dieser interpretiert als 
+                // Variablenname, dessen Inhalt in ein Attribut desselben Namens geschrieben wird
+                strasse, hnr, plz, ort,
+                get anschrift() {
+                    return `${this.strasse} ${this.hnr}\n${this.plz} ${this.ort}`
+                }
+            }
+        }
+
+        const haus = {
+            adresse: Adresse('Mustergasse', '37b', '01234', 'Musterhausen'),
+            eigentuemer: {
+                vname: 'Thomas',
+                nname: 'Möller',
+                adresse: Adresse('Schlossallee', '1', '01236', 'Beispielbüttel'),
+                kontakt: {
+                    tel: '+49-176-852369',
+                    email: 'gibmir@deinekohle.de'
+                }
+            }
+        }
+
+        console.log(haus.adresse.anschrift);
+        console.log(haus.eigentuemer.adresse.anschrift);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

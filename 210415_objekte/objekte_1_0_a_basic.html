@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+        // DATENSTRUKTUR
+        const filme = [];
+
+        // KLASSEN
+        class Film {
+            constructor(titel, regie, laufzeit, jahr) {
+                this.titel = titel;
+                this.regie = regie;
+                this.laufzeit = laufzeit;
+                this.jahr = jahr;
+            }
+        }
+
+        filme.push(new Film(
+            'Matrix',
+            ['Lana Wachowski', 'Lilly Wachowski'],
+            136,
+            1999
+        ));
+        filme.push(new Film(
+            'Cloud Atlas',
+            ['Lana Wachowski', 'Lilly Wachowski', 'Tom Tykwer'],
+            172,
+            2012
+        ));
+        filme.push(new Film(
+            'Alone in the Dark',
+            ['Uwe Boll'],
+            159,
+            2005
+        ));
+        filme.push(new Film(
+            'Artemis Fowl',
+            ['Kenneth Branagh'],
+            155,
+            2020
+        ));
+        filme.push(new Film(
+            'Lola rennt',
+            ['Tom Tykwer'],
+            141,
+            1998
+        ));
+
+        console.log(filme);
+        
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

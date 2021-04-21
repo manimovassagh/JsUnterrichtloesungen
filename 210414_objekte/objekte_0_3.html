@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+        // Factory oder factory function
+        // Eine Funktion, die ein Objekt als Rückgabewert leifert
+        const Adresse = (strasse, hnr, plz, ort) => {
+            return {
+                // wenn als Attribut nur ein Wert steht wird dieser interpretiert als 
+                // Variablenname, dessen Inhalt in ein Attribut desselben Namens geschrieben wird
+                strasse, hnr, plz, ort,
+                get anschrift() {
+                    return `${this.strasse} ${this.hnr}\n${this.plz} ${this.ort}`
+                }
+            }
+        }
+
+        const Mietpartei = (vname, nname, wnr, km) => {
+            return {
+                vname, nname, wnr, km,
+                get vollerName() {
+                    return `${this.vname} ${this.nname}`;
+                }
+            };
+
+        }
+
+        const haus = {
+            // Sollte auch in eine JSON-Datei ausgelagert werden. 
+            // Mache ich jetzt aus Zeitgründen nicht
+            adresse: Adresse('Mustergasse', '37b', '01234', 'Musterhausen'),
+            eigentuemer: {
+                vname: 'Thomas',
+                nname: 'Möller',
+                adresse: Adresse('Schlossallee', '1', '01236', 'Beispielbüttel'),
+                kontakt: {
+                    tel: '+49-176-852369',
+                    email: 'gibmir@deinekohle.de'
+                }
+            },
+            // Die Mietparteien sollten zunächst ein leeres Array sein, das erst zur Laufzeit aufgefüllt wird.
+            mietparteien: [],
+            // Gamzer Name des Mieter in einer definierten Wohnungsnummer (wnr)
+            nameByWnr(wnr) {
+                let mietpartei = this.mietparteien.find(el => el.wnr == wnr);
+                /* 
+                if (mietpartei) {
+                    return mietpartei.vollerName;
+                } else {
+                    return 'Wohnungsnummer unbekannt';
+                }
+                */
+
+                return mietpartei ? mietpartei.vollerName : 'Unbekannte Wohnungsnummer';
+            }
+        }
+
+        const verarbeiteDaten = data => {
+            data.forEach(mietpartei => {
+                haus.mietparteien.push(Mietpartei(
+                    mietpartei.vname,
+                    mietpartei.nname,
+                    mietpartei.wnr,
+                    mietpartei.km,
+                ));
+            })
+            // Erst ab hier sind die Mietparteien im Array gespeichert
+            // console.log(haus);
+
+            console.log(haus.nameByWnr(1));
+            console.log(haus.nameByWnr(3));
+            console.log(haus.nameByWnr(5));
+        }
+
+        const init = () => {
+            // Daten aus der JSON
+            fetch('./mietparteien.json').then(
+                res => res.json()
+            ).then(
+                // data => verarbeiteDaten(data)
+                // Die Funktion kann genausogut direkt aufgerufen werden
+                // Die Daten, die sonst in das data-Attribut laufen, werden 
+                // dann direkt an die Funktion übergeben
+                verarbeiteDaten
+            ).then(
+                // Dieses Then wird erst aufgerufen, wenn die Funktion im vorigen then vollständig abgelaufen ist
+                () => console.log(haus.nameByWnr(3))
+            )
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            init();
+            
+            // console.log(102, haus.nameByWnr(3));
+        });
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

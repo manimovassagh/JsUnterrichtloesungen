@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style>
+        .arrayElement {
+            padding: 5px;
+        }
+
+        .arrayElement::after {
+            content: ' ';
+        }
+
+        .container {
+            margin-bottom: 10px;
+        }
+
+        .container header {
+            font-size: 1.5em;
+
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // Refactoring bedeutet das Optimieren des Codes
+        // Es werden Funktionen angelegt, die den Code sauberer machen
+        document.addEventListener("DOMContentLoaded", evt => {
+
+            // VARIABLEN
+            let ausgabe = document.querySelector('#ausgabe');
+            let rngAnzahl = document.querySelector('#rngAnzahl');
+            let rngMin = document.querySelector('#rngMin');
+            let rngMax = document.querySelector('#rngMax');
+            let btnStart = document.querySelector('#btnStart');
+
+            // FUNKTIONEN
+            // Wenn Parameter auftauchen, die denselben Namen tragen wie eine Variable,
+            // kann im Funktionscode nicht mehr auf die Variablen zugegeriffen werden.
+            const erzeugeZahl = (min, max) => ~~(Math.random() * (max - min + 1) + min);
+
+            // Erzeugen eines Arrays voller zufälliger, ganzer Zahlen
+            const erzeugeArray = (anzahl, min, max) => {
+                let neu = [];
+                console.log(typeof min, typeof max);
+                
+                while (neu.length < anzahl) {
+                    neu.push(erzeugeZahl(min, max));
+                }
+                return neu;
+            }
+
+            // Ausgabe im DOM
+            const ausgeben = (
+                inhalt,
+                klassen,
+                typ = 'div',
+                ziel = ausgabe
+            ) => {
+                const container = document.createElement(typ);
+                container.className = klassen;
+                container.innerHTML = inhalt;
+                ziel.append(container);
+                return container;
+            }
+
+            // Ein Array iterieren und jedes Element einzeln ins DOM schreiben
+            const arrayAusgeben = (inhalt, ziel) => {
+                inhalt.forEach(el => ausgeben(el, 'arrayElement', 'span', ziel))
+            }
+
+            // Durchschnitt eines Array
+            const durchschnitt = dasArray => dasArray.reduce((a, b) => a + b) / dasArray.length;
+
+            // Lese die Eingaben aus und erzeuge ein neues Array samt Ausgabe
+            const createNew = () => {
+                let meinArray = erzeugeArray(
+                    Number(rngAnzahl.value),
+                    Number(rngMin.value),
+                    Number(rngMax.value),
+                );
+                const container = ausgeben('', 'container');
+                ausgeben(
+                    `${rngAnzahl.value} Zahlen zwischen ${rngMin.value} und ${rngMax.value}`,
+                    '',
+                    'header',
+                    container,
+                );
+                arrayAusgeben(meinArray, container);
+
+                // Ermittlung des Durchschnitts
+                ausgeben(
+                    `Durchschnitt: ${durchschnitt(meinArray)}`,
+                    'info',
+                    'div',
+                    container
+                )
+            }
+
+            const init = () => { }
+
+            // EVENTLISTENERS
+            btnStart.addEventListener('click', createNew);
+
+            // INIT
+            init();
+        });
+    </script>
+</head>
+
+<body>
+    <main>
+        <div id="eingabe">
+            <p>
+                Anzahl: <input type="range" min="1" max="500" value="100" id="rngAnzahl" />
+            </p>
+            <p>
+                Min: <input type="range" min="0" max="500" value="0" id="rngMin" />
+            </p>
+            <p>
+                Max: <input type="range" min="1" max="500" value="50" id="rngMax" />
+            </p>
+            <p>
+                <button id="btnStart">Start</button>
+            </p>
+        </div>
+        <div id="ausgabe"></div>
+    </main>
+</body>
+
+</html>

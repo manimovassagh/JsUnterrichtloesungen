@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+        // DATENSTRUKTUR
+        let filme = [];
+        let personen = [];
+
+        // KLASSEN
+        class Film {
+            constructor(titel, regie, laufzeit, jahr) {
+                this.titel = titel;
+                this.regie = regie;
+                this.laufzeit = laufzeit;
+                this.jahr = jahr;
+                this.id = nextID(filme);
+            }
+        }
+
+        class Person {
+            constructor(vname, nname) {
+                this.vname = vname;
+                this.nname = nname;
+                this.id = nextID(personen);
+            }
+        }
+
+        // FUNKTIONEN
+        const nextID = data => {
+            let id = 1;
+            data.forEach(el => {
+                if (el.id >= id) id = el.id + 1;
+            })
+            return id;
+        }
+
+        const init = () => {
+
+            // Personen speichern
+            personen.push(new Person('Lana', 'Wachowski'))
+            personen.push(new Person('Lilly', 'Wachowski'))
+            personen.push(new Person('Tom', 'Tykwer'))
+            personen.push(new Person('Uwe', 'Boll'))
+            personen.push(new Person('Kenneth', 'Branagh'))
+
+            // Filme speichern
+            filme.push(new Film('Matrix', [1, 2], 136, 1999));
+            filme.push(new Film('Cloud Atlas', [1, 2, 3], 172, 2012));
+            filme.push(new Film('Alone in the Dark', [4], 159, 2005));
+            filme.push(new Film('Artemis Fowl', [5], 155, 2020));
+            filme.push(new Film('Lola rennt', [3], 141, 1998));
+
+            // console.log(filme);
+
+            // Filme in JSON-String konvertieren, um einen Upload zum Server zu simulieren
+            let filmeString = JSON.stringify(filme);
+            // console.log(filmeString);
+
+            // String in Array konvertieren, um das Laden vom Server zu simulieren
+            filme = JSON.parse(filmeString);
+
+            // Änderungen an einer Person haben so keine Wirkung, weil die Personen-Daten im String niedergeschrieben sind.
+            // Die Verknüpfung zum Personen-Array ist aufgehoben.
+            personen[2].nname = 'Schmitt';
+
+            console.log(personen);
+            console.log(filme);
+        }
+
+        // INIT
+        document.addEventListener("DOMContentLoaded", evt => {
+            init();
+        });
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

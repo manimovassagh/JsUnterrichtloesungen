@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style>
+        .arrayElement {
+            padding: 5px;
+        }
+
+        .arrayElement::after {
+            content: ' ';
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // Refactoring bedeutet das Optimieren des Codes
+        // Es werden Funktionen angelegt, die den Code sauberer machen
+        document.addEventListener("DOMContentLoaded", evt => {
+
+            // VARIABLEN
+            let anzahl = 100, min = 0, max = 50;
+            let meinArray = [];
+            let ausgabe = document.querySelector('#ausgabe');
+
+            // FUNKTIONEN
+            // Wenn Parameter auftauchen, die denselben Namen tragen wie eine Variable,
+            // kann im Funktionscode nicht mehr auf die Variablen zugegeriffen werden.
+            const erzeugeZahl = (min, max) => ~~(Math.random() * (max - min + 1) + min);
+
+            // Erzeugen eines Arrays voller zufälliger, ganzer Zahlen
+            const erzeugeArray = (anzahl, min, max) => {
+                let neu = [];
+                while (neu.length < anzahl) {
+                    neu.push(erzeugeZahl(min, max));
+                }
+                return neu;
+            }
+
+            // Ausgabe im DOM
+            const ausgeben = (
+                inhalt,
+                klassen,
+                typ = 'div',
+                ziel = ausgabe
+            ) => {
+                const container = document.createElement(typ);
+                container.className = klassen;
+                container.innerHTML = inhalt;
+                ziel.append(container);
+            }
+
+            // Ein Array iterieren und jedes Element einzeln ins DOM schreiben
+            const arrayAusgeben = (inhalt, ziel) => {
+                inhalt.forEach(el => ausgeben(el, 'arrayElement', 'span'))
+            }
+
+            const init = () => {
+                // Nicht irritieren lassen: Die übergebenen Werte werden aus den globalen Variablen gefüttert
+                // Dass die Parameter in der Funktion genauso heißen, hat keine Bedeutung.
+                meinArray = erzeugeArray(anzahl, min, max);
+                arrayAusgeben(meinArray, ausgabe);
+
+            }
+
+            // INIT
+            init();
+        });
+    </script>
+</head>
+
+<body>
+    <main>
+        <div id="ausgabe"></div>
+    </main>
+</body>
+
+</html>

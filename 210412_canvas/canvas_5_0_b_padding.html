@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style>
+        canvas {
+            position: relative;
+            display: block;
+        }
+
+        .diagram {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #aaa;
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+        'use strict';
+        document.addEventListener("DOMContentLoaded", evt => {
+
+            // VARIABLEN
+            const diagram = document.querySelector('.diagram canvas');
+
+            // FUNKTIONEN
+            // Erzeugen einer ganzen, zufälligen Zahl zwischen min und max
+            const zahlErzeugen = (min, max) => ~~(Math.random() * (max - min + 1) + min);
+
+            // Erzeugen eines Array mit der definierten Anzahl an zufälligen Zahlen
+            const arrayErzeugen = (anzahl, min, max) => {
+                let neu = [];
+                for (let i = 0; i < anzahl; i++) {
+                    neu.push(zahlErzeugen(min, max));
+                }
+                return neu;
+            }
+
+            // Diagramm im Canvas zeichnen
+            // Parameter: Darzustellender Datensatz, Canvas
+            // Canvas übergeben, um auch in andere Canvas-Dinger zeichnen zu können
+            // padding: Abstand der Balken zueinander
+            // margin: Abstand zur Kante
+            const zeichne = (data, c, padding) => {
+                const ctx = c.getContext('2d');
+
+                // Breite eines Kastens errechnen
+                const barWidth = (c.width + padding) / data.length;
+
+                // Größten Wert aus dem Datensatz suchen
+                let maxWert = 0;
+                for (let wert of data) {
+                    maxWert = (wert > maxWert) ? wert : maxWert;
+                }
+
+                for (let index in data) {
+                    let barHeight = c.height / maxWert * data[index];
+                    ctx.fillRect(
+                        index * barWidth,   // Abstand von der linken Kante
+                        c.height - barHeight,           // Oberkante
+                        barWidth - padding,           // Breite des Balkens
+                        barHeight
+                    );
+                }
+            }
+
+            // Alles zur Initialisierung des Programmes.
+            const init = () => {
+                let datensatz1 = arrayErzeugen(20, 10, 5000);
+                //console.log(datensatz1);
+                zeichne(datensatz1, diagram, 5, 10);
+            }
+
+            // INIT
+            init();
+        });
+
+    </script>
+</head>
+
+<body>
+    <main>
+        <div class="diagram">
+            <canvas width="600" height="400"></canvas>
+        </div>
+    </main>
+</body>
+
+</html>
