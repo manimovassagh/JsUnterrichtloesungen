@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script type="module">
+        'use strict';
+
+        import dom from './dom.js';
+
+        document.addEventListener("DOMContentLoaded", evt => {
+
+            let ausgabe = document.querySelector('#ausgabe');
+            let btnNeuesElement = document.querySelector('#neuesElement');
+
+            const erzeugeDomElement = () => {
+                let neu = dom.DOMcreate({
+                    inhalt: 'Hallo Welt',
+                    eltern: ausgabe
+                })
+                return neu;
+            }
+
+            const warteDreiSek = () => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => { 
+                        resolve(erzeugeDomElement())
+                    }, 3000);
+                })
+            }
+
+            btnNeuesElement.addEventListener('click', () => {
+                warteDreiSek().then(
+                    // Hier irgendein konstruiertes Problem
+                    data => console.log(data)
+                )
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <button id="neuesElement">Neues Element</button>
+
+    <div id="ausgabe"></div>
+
+</body>
+
+</html>

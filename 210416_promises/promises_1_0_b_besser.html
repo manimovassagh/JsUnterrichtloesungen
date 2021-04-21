@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style></style>
+
+    <script>
+        'use strict';
+
+        const checkPrime = zahl => {
+            // Promise als Rückgabe erzeugen
+            return new Promise((resolve, reject) => {
+                for (let i = 2; i <= Math.sqrt(zahl); i++) {
+                    // Als Return ein Objekt erzeugen, damit mehr Infos zurückgehen können und 
+                    // alle Rückgaben denselben Datentypen (und -struktur) haben
+                    if (zahl % i == 0) resolve({
+                        isPrime: false,
+                        teiler: i
+                    });
+                }
+                resolve({
+                    isPrime: true
+                });
+            })
+        }
+
+        const init = () => {
+            let checkMe = prompt('Welche Zahl soll geprüft werden?');
+            checkPrime(checkMe).then(
+                data => {
+                    if (data.isPrime) console.log(`${checkMe} ist prim.`);
+                    else console.log(`${checkMe} hat einen Teiler.\nDer erste Teiler ist ${data.teiler}`);
+                }
+            ).catch(
+                console.log
+            )
+
+        }
+
+        init();
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
